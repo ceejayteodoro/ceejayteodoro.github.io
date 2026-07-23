@@ -33,7 +33,6 @@
     --glow-a: #3f65c9;
     --glow-b: #eb9c7d;
     --glow-c: #6fbf9a;
-    --glow-opacity: 0.4;
     --shadow: 0 1px 2px rgba(30,32,41,.04), 0 6px 20px rgba(30,32,41,.06);
   }
 
@@ -82,40 +81,64 @@
     color: var(--ink-soft);
     padding-bottom: 10px;
   }
+  /* Orb-drift technique matched from genesisflowlabs.com's hero: large low-alpha
+     radial gradients, heavily blurred, drifting on slow multi-step keyframes. */
   .name-wrap { position: relative; display: inline-block; isolation: isolate; }
   .name-glow {
     position: absolute;
-    inset: -35% -15%;
+    inset: 0;
     z-index: -1;
-    filter: blur(46px);
     pointer-events: none;
   }
   .name-glow span {
     position: absolute;
-    width: 46%;
-    height: 90%;
     border-radius: 50%;
-    opacity: var(--glow-opacity);
+    filter: blur(60px);
   }
-  .name-glow span:nth-child(1) { left: 2%; top: 8%; background: var(--glow-a); }
-  .name-glow span:nth-child(2) { right: 4%; top: 0; background: var(--glow-b); }
-  .name-glow span:nth-child(3) { left: 30%; bottom: -10%; background: var(--glow-c); }
+  .name-glow span:nth-child(1) {
+    width: 260px;
+    height: 260px;
+    top: -70px;
+    left: -60px;
+    background: radial-gradient(circle, var(--glow-a) 0%, transparent 70%);
+    opacity: 0.55;
+  }
+  .name-glow span:nth-child(2) {
+    width: 220px;
+    height: 220px;
+    top: -40px;
+    right: -50px;
+    background: radial-gradient(circle, var(--glow-b) 0%, transparent 70%);
+    opacity: 0.5;
+  }
+  .name-glow span:nth-child(3) {
+    width: 200px;
+    height: 200px;
+    bottom: -80px;
+    left: 32%;
+    background: radial-gradient(circle, var(--glow-c) 0%, transparent 70%);
+    opacity: 0.45;
+  }
   @media (prefers-reduced-motion: no-preference) {
-    .name-glow span:nth-child(1) { animation: drift-a 16s ease-in-out infinite; }
-    .name-glow span:nth-child(2) { animation: drift-b 20s ease-in-out infinite; }
-    .name-glow span:nth-child(3) { animation: drift-c 24s ease-in-out infinite; }
+    .name-glow span:nth-child(1) { animation: drift-a 35s ease-in-out infinite; }
+    .name-glow span:nth-child(2) { animation: drift-b 32s ease-in-out infinite; }
+    .name-glow span:nth-child(3) { animation: drift-c 28s ease-in-out infinite; }
   }
   @keyframes drift-a {
     0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(8%, -10%) scale(1.15); }
+    25% { transform: translate(24px, -16px) scale(1.06); }
+    50% { transform: translate(-16px, 20px) scale(0.95); }
+    75% { transform: translate(14px, 14px) scale(1.03); }
   }
   @keyframes drift-b {
     0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(-10%, 8%) scale(0.9); }
+    33% { transform: translate(-18px, 16px) scale(1.05); }
+    66% { transform: translate(16px, -10px) scale(0.96); }
   }
   @keyframes drift-c {
     0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(6%, 10%) scale(1.1); }
+    40% { transform: translate(12px, 18px) scale(1.08); }
+    70% { transform: translate(-14px, -10px) scale(0.94); }
   }
   .nameplate {
     position: relative;
